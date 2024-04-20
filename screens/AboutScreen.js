@@ -4,10 +4,40 @@ import { ListItem } from "react-native-elements";
 import { Avatar } from "react-native-elements";
 import {useSelector} from 'react-redux';
 import {baseUrl} from '../shared/baseUrl';
+import Loading from '../components/LoadingComponent';
+
 
 const AboutScreen =()=>{
     const partners=useSelector((state)=> state.partners);
-    const Mission=()=>{
+
+    if(partners.isLoading){
+        return (
+            <ScrollView>
+            <Mission />
+            <Card>
+                <Card.Title>
+                Community Partners
+                </Card.Title>
+                <Card.Divider/>
+                <Loading/>
+            </Card>
+        </ScrollView>
+
+
+            
+        );
+
+    }
+    if(partners.errMess){
+        return (
+            <View>
+                <Text>{partners.errMess}</Text>
+            </View>
+        )
+    }
+
+
+    function Mission(){
         return (
             <Card>
                 <Card.Title>Our Mission</Card.Title>
@@ -26,7 +56,7 @@ const AboutScreen =()=>{
 
 
         )
-    }
+    };
     return (
         <ScrollView>
             <Mission/>
